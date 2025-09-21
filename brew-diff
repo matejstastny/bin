@@ -1,5 +1,19 @@
-#!/bin/bash
-# Usage: brew-diff /path/to/Brewfile
+#!/usr/bin/env bash
+
+# --------------------------------------------------------------------------------------------
+# brew-diff — Months Reference
+# --------------------------------------------------------------------------------------------
+# Author: Matej Stastny
+# Date: 2025-09-21 (YYYY-MM-DD)
+# License: MIT
+# Link: https://github.com/matejstastny/bin
+# --------------------------------------------------------------------------------------------
+# Usage:
+#   ./brew-diff path/to/Brewfile
+# Description:
+#   Compares installed Homebrew packages and casks against a given Brewfile.
+#   Lists missing and extra packages/casks.
+# --------------------------------------------------------------------------------------------
 
 if [ -z "$1" ]; then
     echo "Usage: $0 Brewfile"

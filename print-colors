@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
 # --------------------------------------------------------------------------------------------
-# print_colors.sh — Terminal Colors Reference
+# print-colors — Terminal Colors Reference
 # --------------------------------------------------------------------------------------------
 # Author: Matej Stastny
 # Date: 2025-02-27 (YYYY-MM-DD)
 # License: MIT
-# Link: https://github.com/matejstastny/dotfiles
+# Link: https://github.com/matejstastny/bin
 # --------------------------------------------------------------------------------------------
 # Description:
 #   This script prints a reference chart of terminal colors using ANSI escape codes.
