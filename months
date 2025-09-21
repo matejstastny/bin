@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+# --------------------------------------------------------------------------------------------
+# months — Months Reference
+# --------------------------------------------------------------------------------------------
+# Author: Matej Stastny
+# Date: 2025-09-21 (YYYY-MM-DD)
+# License: MIT
+# Link: https://github.com/matejstastny/bin
+# --------------------------------------------------------------------------------------------
+# Description:
+#   This script prints a reference list of the months of the year.
+# --------------------------------------------------------------------------------------------
+
+echo "01. January"
+echo "02. February"
+echo "03. March"
+echo "04. April"
+echo "05. May"
+echo "06. June"
+echo "07. July"
+echo "08. August"
+echo "09. September"
+echo "10. October"
+echo "11. November"
+echo "12. December"
