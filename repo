@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+set -e
+
+# --------------------------------------------------------------------------------------------
+# repo - Open the current git repository's remote URL in a browser
+# --------------------------------------------------------------------------------------------
+# Author: Matej Stastny
+# Date: 2024-06-08 (YYYY-MM-DD)
+# License: MIT
+# Link: https://github.com/matejstastny/bin
+# --------------------------------------------------------------------------------------------
+# Description:
+#   This script finds the root of the current git repository, determines the remote 'origin'
+#   URL, converts it to a web URL, and opens it in the configured browser.
+#
+# Features:
+#   - Works with SSH and HTTPS git remotes
+#   - Automatically detects git root
+#   - Opens the repository in a specified browser (default: Vivaldi)
+#
+# Notes:
+#   - Ensure this script is executable: chmod +x repo
+#   - Requires 'git' to be installed and available in PATH
+#   - Set the BROWSER variable to use a different browser if desired
+# --------------------------------------------------------------------------------------------
+
+BROWSER=/Applications/Vivaldi.app/Contents/MacOS/Vivaldi
+
+# --------------------------------------------------------------------------------------------
+
+# Find git root
+if ! git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+    echo " ❌ Not a git repository (no .git found)" >&2
+    exit 1
+fi
+
+cd "$git_root"
+
+# Check browser
+if [ -z "$BROWSER" ]; then
+    echo "  ❌ No browser configured in BROWSER env var" >&2
+    exit 2
+fi
+
+# Get remote URL
+if ! remote_url=$(git config --get remote.origin.url); then
+    echo " ❌ No 'origin' remote configured" >&2
+    exit 3
+fi
+
+# Convert remote URL to HTTPS
+if [[ "$remote_url" =~ ^git@([^:]+):(.+)\.git$ ]]; then
+    # SSH style: git@github.com:user/repo.git
+    web_url="https://${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+elif [[ "$remote_url" =~ ^git@([^:]+):(.+)$ ]]; then
+    # SSH style without .git
+    web_url="https://${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+elif [[ "$remote_url" =~ ^https?:// ]]; then
+    # HTTPS style
+    web_url="${remote_url%.git}"
+else
+    echo "❌ Unsupported or invalid remote URL: $remote_url" >&2
+    exit 4
+fi
+
+echo " 🌐 Opening $web_url ..."
+"$BROWSER" "$web_url" >/dev/null 2>&1 &
