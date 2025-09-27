@@ -31,7 +31,7 @@ BROWSER=/Applications/Vivaldi.app/Contents/MacOS/Vivaldi
 
 # Find git root
 if ! git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
-    echo " ❌ Not a git repository (no .git found)" >&2
+    echo "❌ Not a git repository (no .git found)" >&2
     exit 1
 fi
 
@@ -39,7 +39,7 @@ cd "$git_root"
 
 # Get remote URL
 if ! remote_url=$(git config --get remote.origin.url); then
-    echo " ❌ No 'origin' remote configured" >&2
+    echo "❌ No 'origin' remote configured" >&2
     exit 3
 fi
 
@@ -58,5 +58,5 @@ else
     exit 4
 fi
 
-echo " 🌐 Opening $web_url ..."
+echo "🌐 Opening $web_url ..."
 "$BROWSER" "$web_url" >/dev/null 2>&1 &
