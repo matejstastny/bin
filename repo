@@ -37,12 +37,6 @@ fi
 
 cd "$git_root"
 
-# Check browser
-if [ -z "$BROWSER" ]; then
-    echo "  ❌ No browser configured in BROWSER env var" >&2
-    exit 2
-fi
-
 # Get remote URL
 if ! remote_url=$(git config --get remote.origin.url); then
     echo " ❌ No 'origin' remote configured" >&2
