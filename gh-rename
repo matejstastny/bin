@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# --------------------------------------------------------------------------------------------
+# gh-rename - Replace all occurrences of a GitHub username in files under a directory
+# --------------------------------------------------------------------------------------------
+# Author: Matej Stastny
+# Date: 2025-09-26 (YYYY-MM-DD)
+# License: MIT
+# Link: https://github.com/matejstastny/bin
+# --------------------------------------------------------------------------------------------
+# Description:
+#   This script recursively searches for all occurrences of a GitHub username in files
+#   under a specified directory and replaces them with a new username.
+#
+# Features:
+#   - Recursively finds and replaces "github.com/<old_username>" with "github.com/<new_username>"
+#   - Works on all files under the given directory
+#
+# Usage:
+#   gh-rename <directory> <old_username> <new_username>
+#
+# Arguments:
+#   <directory>      : Root directory to start the search
+#   <old_username>   : GitHub username to replace
+#   <new_username>   : New GitHub username
+# --------------------------------------------------------------------------------------------
+
+if [ $# -ne 3 ]; then
+    echo "❌ Usage: $0 <directory> <old_username> <new_username>"
+    exit 1
+fi
+
+BASE_DIR="$1"
+OLD="github.com/$2"
+NEW="github.com/$3"
+
+echo "🔁 Replacing all occurrences of:"
+echo "   $OLD ➜ $NEW"
+echo "📂 Starting in directory: $BASE_DIR"
+echo "------------------------------------------"
+
+if [ ! -d "$BASE_DIR" ]; then
+    echo "❌ Error: Directory $BASE_DIR does not exist."
+    exit 1
+fi
+
+while IFS= read -r file; do
+    echo "✏️  Found in: $file"
+    sed -i '' "s|$OLD|$NEW|g" "$file"
+done < <(grep -rl "$OLD" "$BASE_DIR")
+
+echo "✅ Done replacing all matching links."
