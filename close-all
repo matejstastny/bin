@@ -1,0 +1,23 @@
+#!/bin/bash
+# Close all non-system apps before gaming
+
+# List of apps to quit (optional, or leave empty to quit all)
+APPS=(
+  "Ghostty"
+  "Visual Studio Code"
+  "Vivaldi"
+  "Vesktop"
+  "Music"
+)
+
+# Quit specific apps if listed, otherwise quit all
+if [ ${#APPS[@]} -gt 0 ]; then
+  for app in "${APPS[@]}"; do
+    osascript -e "tell application \"$app\" to quit"
+  done
+else
+  osascript -e 'tell application "System Events" to set theApps to (name of every process whose background only is false)'
+  for app in "${theApps[@]}"; do
+    osascript -e "tell application \"$app\" to quit"
+  done
+fi
