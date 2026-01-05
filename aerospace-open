@@ -1,25 +1,18 @@
 #!/bin/bash
-# Reopen apps on correct monitors and workspaces using AeroSpace
 
-MON1="Built-in Retina Display"
-MON2="LS27A800U"
+open() {
+    local workspace="$1"
+    shift
+    aerospace workspace "$workspace"
+    sleep 2
+    for app in "$@"; do
+        open c-a "$app"
+    done
+    sleep 2
+}
 
-# Space 1 — monitor 1, Ghostty
-aerospace focus-monitor "$MON1"
-aerospace workspace 1
-open -a "Ghostty"
-
-# Space 2 — monitor 2, VS Code + Vivaldi
-aerospace focus-monitor "$MON2"
-aerospace workspace 2
-open -a "Visual Studio Code"
-open -a "Vivaldi"
-
-# Space 3 — monitor 1, Vesktop
-aerospace focus-monitor "$MON1"
-aerospace workspace 3
-open -a "Vesktop"
-
-# Space 4 — monitor 1, Music
-aerospace workspace 4
-open -a "Music"
+open 1 "Ghostty"
+open 2 "VSCode"
+open 3 "Vivaldi"
+open 4 "Music"
+open 5 "Vesktop"
