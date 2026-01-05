@@ -1,23 +1,15 @@
 #!/bin/bash
-# Close all non-system apps before gaming
 
-# List of apps to quit (optional, or leave empty to quit all)
-APPS=(
-  "Ghostty"
-  "Visual Studio Code"
-  "Vivaldi"
-  "Vesktop"
-  "Music"
-)
+# Get list of running, user-visible apps (ignores daemons and menu bar processes)
+apps=$(osascript -e 'tell application "System Events" to get name of (processes where background only is false)')
 
-# Quit specific apps if listed, otherwise quit all
-if [ ${#APPS[@]} -gt 0 ]; then
-  for app in "${APPS[@]}"; do
-    osascript -e "tell application \"$app\" to quit"
-  done
-else
-  osascript -e 'tell application "System Events" to set theApps to (name of every process whose background only is false)'
-  for app in "${theApps[@]}"; do
-    osascript -e "tell application \"$app\" to quit"
-  done
-fi
+# Convert AppleScript list → newline-separated
+IFS=', ' read -r -a app_list <<< "$apps"
+
+# Quit each app except Finder (quitting Finder is allowed but optional)
+for app in "${app_list[@]}"; do
+    if [[ "$app" != "Finder" ]]; then
+        echo "Closing: $app"
+        osascript -e "tell application \"$app\" to quit"
+    fi
+done
