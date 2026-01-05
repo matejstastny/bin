@@ -1,18 +1,55 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-open() {
-    local workspace="$1"
-    shift
-    aerospace workspace "$workspace"
-    sleep 2
-    for app in "$@"; do
-        open c-a "$app"
-    done
-    sleep 2
+set -euo pipefail
+set -x
+
+log() { printf '[LOG] %s\n' "$*"; }
+
+declare -A WORKSPACES
+
+WORKSPACES[1]=$'Ghostty'
+WORKSPACES[2]=$'Visual Studio Code'
+WORKSPACES[3]=$'Vivaldi'
+WORKSPACES[4]=$'Music'
+WORKSPACES[5]=$'Vesktop'
+
+get_apps() {
+    local ws_string="$1"
+    local -a out=()
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && out+=("$line")
+    done <<<"$ws_string"
+    printf '%s\n' "${out[@]}"
 }
 
-open 1 "Ghostty"
-open 2 "VSCode"
-open 3 "Vivaldi"
-open 4 "Music"
-open 5 "Vesktop"
+for ws in "${!WORKSPACES[@]}"; do
+    log "Launching workspace $ws apps"
+    while IFS= read -r app; do
+        log "Launching: $app"
+        open -a "$app" || log "Failed to launch: $app"
+    done < <(get_apps "${WORKSPACES[$ws]}")
+done
+
+sleep 5
+
+log "Scanning Aerospace windows..."
+
+aerospace list-windows --all |
+    while IFS='|' read -r winid title appname; do
+        winid=$(echo "$winid" | xargs)
+        appname=$(echo "$appname" | xargs)
+
+        [[ -z "$winid" ]] && continue
+
+        log "Window: id=$winid app=$appname"
+
+        for ws in "${!WORKSPACES[@]}"; do
+            while IFS= read -r app; do
+                if [[ "$appname" == "$app" ]]; then
+                    log "Moving $appname → workspace $ws"
+                    aerospace move-node-to-workspace --window-id "$winid" "$ws" ||
+                        log "FAILED move for $winid ($appname)"
+                fi
+            done < <(get_apps "${WORKSPACES[$ws]}")
+        done
+    done
