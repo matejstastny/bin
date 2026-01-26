@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+JAVA_DIR="$HOME/java"
+
+# Step 1: Add all JDKs to jenv
+if [ -d "$JAVA_DIR" ]; then
+    for dir in "$JAVA_DIR"/*/; do
+        if [ -d "$dir" ]; then
+            echo "Adding $dir to jenv..."
+            jenv add "${dir}Contents/Home"
+        fi
+    done
+else
+    echo "Directory $JAVA_DIR does not exist"
+    exit 1
+fi
+
+# Step 2: List all JDKs in jenv with numbers
+echo -e "\nAvailable Java versions:"
+mapfile -t java_versions < <(jenv versions --bare)
+for i in "${!java_versions[@]}"; do
+    printf "%d) %s\n" "$((i + 1))" "${java_versions[$i]}"
+done
+
+# Step 3: Prompt the user to select one
+read -rp "Enter the number of the Java version to set as global: " selection
+
+# Validate input
+if [[ "$selection" =~ ^[0-9]+$ ]] && ((selection >= 1 && selection <= ${#java_versions[@]})); then
+    chosen_java="${java_versions[$((selection - 1))]}"
+    jenv global "$chosen_java"
+    echo "Java global version set to $chosen_java"
+else
+    echo "Invalid selection"
+    exit 1
+fi
