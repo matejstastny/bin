@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    "bin/*": "shellscript"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+  }
+}
