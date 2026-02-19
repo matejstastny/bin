@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Nieche script for quick attach to devcontainer projects
+# Checks if the attach_to_container.sh script exists and is executable.
+# If found, clears the terminal and runs the script to attach to a Docker container.
+# Otherwise, displays an error message.
+
+if [[ -x "./scripts/attach_to_container.sh" ]]; then
+    clear
+    ./scripts/attach_to_container.sh
+else
+    echo "No attach script found!"
+fi
