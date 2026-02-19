@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# pexp = packwiz export
 # Nieche script to get all mod-ID's from a packwiz project and dump them into a file.
 # Used when I was migrating packwiz projects to azalea
 

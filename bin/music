@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Osascript to quickly get whats playing on Apple music
+# osascript to quickly get whats playing on apple music
 
 osascript <<'APPLESCRIPT'
 tell application "Music"

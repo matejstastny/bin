@@ -1,19 +1,8 @@
 #!/usr/bin/env bash
 
-# --------------------------------------------------------------------------------------------
-# avchd-extract - Canon & Sony camera video exporter
-# --------------------------------------------------------------------------------------------
-# Author: Spy at the Hatch
-# Date: 2019-06-05 (YYYY-MM-DD)
-# License: None in repo
-# Link: https://github.com/spyatthehatch/avchd-export
-# --------------------------------------------------------------------------------------------
-# Usage:
-#   ./avchd-export INPUT_DIR OUTPUT_DIR
-# Description:
-#   This is a bash script to export MTS files from AVCHD and losslessly convert them to mp4
-#   files. It requires FFMPEG to convert MTS files to mp4 files.
-# --------------------------------------------------------------------------------------------
+# from: https://github.com/spyatthehatch/avchd-export
+# ./avchd-export INPUT_DIR OUTPUT_DIR
+#-------------------------------------
 
 # Update this to the location of your FFMPEG, use the full path!
 FFMPEG="$(which ffmpeg)" # because installed through homebrew

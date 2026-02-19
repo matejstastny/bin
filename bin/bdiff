@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+# compares installed homebrew packages and casks against a given brewfile
+# lists missing and extra packages/casks
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 Brewfile"
+    exit 1
+fi
+
+BREWFILE="$1"
+
+INSTALLED_FORMULAE=$(brew leaves)
+INSTALLED_CASKS=$(brew list --cask)
+
+BREWFILE_FORMULAE=$(grep '^brew ' "$BREWFILE" | awk '{print $2}' | tr -d '"')
+BREWFILE_CASKS=$(grep '^cask ' "$BREWFILE" | awk '{print $2}' | tr -d '"')
+
+BOLD="$(tput bold 2>/dev/null || true)"
+RESET="$(tput sgr0 2>/dev/null || true)"
+BLUE="$(tput setaf 4 2>/dev/null || true)"
+GREEN="$(tput setaf 2 2>/dev/null || true)"
+YELLOW="$(tput setaf 3 2>/dev/null || true)"
+PURPLE="$(tput setaf 5 2>/dev/null || true)"
+ORANGE="$(tput setaf 208 2>/dev/null || tput setaf 3 2>/dev/null || true)"
+
+print_section() {
+    printf "\n${BOLD}${BLUE}%s${RESET}\n" "$1"
+}
+
+print_items() {
+    ITEMS="$1"
+    COLOR="$2"
+    if [ -z "$ITEMS" ]; then
+        printf "  ${GREEN}None ✔${RESET}\n"
+    else
+        printf "%s\n" "$ITEMS" | sed "s/^/ ${COLOR}- /" | sed "s/$/${RESET}/"
+    fi
+}
+
+MISSING_FORMULAE=$(comm -23 <(echo "$BREWFILE_FORMULAE" | sort) <(echo "$INSTALLED_FORMULAE" | sort))
+EXTRA_FORMULAE=$(comm -13 <(echo "$BREWFILE_FORMULAE" | sort) <(echo "$INSTALLED_FORMULAE" | sort))
+MISSING_CASKS=$(comm -23 <(echo "$BREWFILE_CASKS" | sort) <(echo "$INSTALLED_CASKS" | sort))
+EXTRA_CASKS=$(comm -13 <(echo "$BREWFILE_CASKS" | sort) <(echo "$INSTALLED_CASKS" | sort))
+
+print_section "NOT INSTALLED"
+print_items "$MISSING_FORMULAE" "$PURPLE"
+print_items "$MISSING_CASKS" "$ORANGE"
+
+print_section "EXTRA"
+print_items "$EXTRA_FORMULAE" "$PURPLE"
+print_items "$EXTRA_CASKS" "$ORANGE"

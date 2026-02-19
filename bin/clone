@@ -1,38 +1,18 @@
 #!/usr/bin/env bash
 
-# --------------------------------------------------------------------------------------------
-# clone - Simple GitHub repository cloner
-# --------------------------------------------------------------------------------------------
-# Author: Matej Stastny
-# Date: 2025-09-26 (YYYY-MM-DD)
-# License: MIT
-# Link: https://github.com/matejstastny/bin
-# --------------------------------------------------------------------------------------------
-# Description:
-#   This script clones a GitHub repository using HTTPS.
-#   - With one argument: clones matejstastny/<repo>
-#   - With two arguments: clones <user>/<repo>
-#
-# Usage:
-#   clone <repo>
-#   clone <user> <repo>
-#
-# Examples:
-#   clone dotfiles
-#   clone torvalds linux
-# --------------------------------------------------------------------------------------------
+# quickclone
 
 if [ $# -eq 0 ]; then
-    echo "❌ Error: No parameters provided"
+    echo "[ERR] No parameters provided"
     exit 1
 elif [ $# -eq 1 ]; then
     repo="github.com/matejstastny/$1.git"
 elif [ $# -eq 2 ]; then
     repo="github.com/$1/$2.git"
 else
-    echo "❌ Error: Too many parameters"
+    echo "[ERR] Too many parameters"
     exit 1
 fi
 
-echo "🌐 Cloning https://$repo ..."
+echo "cloning https://$repo ..."
 git clone "https://$repo"

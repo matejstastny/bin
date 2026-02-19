@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# qopen = quick open
+# half-working quick opens for my workspace apps.
+
 set -euo pipefail
 set -x
 

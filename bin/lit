@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# prettifier for litematica exported material lists
+
 import sys
 
 STACK_SIZE = 64
