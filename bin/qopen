@@ -12,7 +12,7 @@ declare -A WORKSPACES
 
 WORKSPACES[1]=$'Ghostty'
 WORKSPACES[2]=$'Visual Studio Code'
-WORKSPACES[3]=$'Vivaldi'
+WORKSPACES[3]=$'LibreWolf'
 WORKSPACES[4]=$'Music'
 WORKSPACES[5]=$'Vesktop'
 
