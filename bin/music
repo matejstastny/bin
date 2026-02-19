@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Osascript to quickly get whats playing on Apple music
+
+osascript <<'APPLESCRIPT'
+tell application "Music"
+    if player state is playing then
+        set trackName to name of current track
+        set trackArtist to artist of current track
+        return "󰝚  " & trackName & "  -  " & trackArtist
+    else
+        return "Not Playing"
+    end if
+end tell
+APPLESCRIPT
