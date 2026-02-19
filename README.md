@@ -1,16 +1,4 @@
-<!-- https://patorjk.com/software/taag/?p=display&f=Big&t=matejstastny%2Fdusk&x=none -->
+<img src="./banner.jpg" alt="banner" width="100%">
 
-<div>
-<pre>
-                 _       _     _            _                   ___     _
-                | |     (_)   | |          | |                 / / |   (_)
- _ __ ___   __ _| |_ ___ _ ___| |_ __ _ ___| |_ _ __  _   _   / /| |__  _ _ __
-| '_ ` _ \ / _` | __/ _ \ / __| __/ _` / __| __| '_ \| | | | / / | '_ \| | '_ \
-| | | | | | (_| | ||  __/ \__ \ || (_| \__ \ |_| | | | |_| |/ /  | |_) | | | | |
-|_| |_| |_|\__,_|\__\___| |___/\__\__,_|___/\__|_| |_|\__, /_/   |_.__/|_|_| |_|
-                       _/ |                            __/ |
-                      |__/                            |___/
-</pre>
-</div>
-
-> Understand the scripts before you run them! Run at your own risk!
+> Collection of scripts I use in my workflow
+> Understand the code before you run it! Run at your own risk!
