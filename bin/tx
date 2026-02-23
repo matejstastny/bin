@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # tmux layout loader
+# remember the pane we started from
+START_PANE=$(tmux display-message -p "#{pane_id}")
 
 # -------- layouts --------
 # format: name|layout|directory
@@ -41,3 +43,13 @@ done
 
 # -------- apply layout --------
 tmux select-layout "$layout"
+
+# -------- restore focus --------
+# if original pane still exists, focus it
+if tmux list-panes -F "#{pane_id}" | grep -qx "$START_PANE"; then
+    tmux select-pane -t "$START_PANE"
+else
+    # otherwise focus the leftmost pane
+    leftmost=$(tmux list-panes -F "#{pane_id} #{pane_left}" | sort -k2n | head -n1 | awk '{print $1}')
+    [ -n "$leftmost" ] && tmux select-pane -t "$leftmost"
+fi
