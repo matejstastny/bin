@@ -71,7 +71,7 @@ while IFS= read -r -d '' filepath; do
     name="${file%.*}"
     echo "[ ] Exporting file: $filepath"
     "$FFMPEG" -i "$filepath" -vcodec copy -acodec copy "$OUTPUT_DIR/$name.mp4" >>"$OUTPUT_DIR/$LOG" 2>&1
-done < <(find "$INPUT_DIR" -maxdepth 1 -name "*.MTS" -print0)
+done < <(find "$INPUT_DIR" -name "*.MTS" -print0)
 
 # Finished processing the files, exit.
 echo "[ ] Output messages are logged in file: $OUTPUT_DIR/$LOG"
