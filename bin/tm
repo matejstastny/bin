@@ -2,6 +2,10 @@
 
 # tmux attach to the one and only session i use (yes i only use one - main)
 
+if [ -n "$TMUX" ]; then
+    exit 0
+fi
+
 if ! tmux has-session -t main 2>/dev/null; then
     tmux new-session -d -s main
 fi
